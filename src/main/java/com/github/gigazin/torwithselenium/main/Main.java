@@ -1,6 +1,6 @@
-package com.github.gigazin.youbot.main;
+package com.github.gigazin.torwithselenium.main;
 
-import com.github.gigazin.youbot.application.YouBotApplication;
+import com.github.gigazin.torwithselenium.application.YouBotApplication;
 
 /**
  * This class and method are used to launch the application outside IDE.

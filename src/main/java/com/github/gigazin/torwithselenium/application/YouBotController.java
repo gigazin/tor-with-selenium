@@ -1,4 +1,4 @@
-package com.github.gigazin.youbot.application;
+package com.github.gigazin.torwithselenium.application;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -26,7 +26,7 @@ public class YouBotController {
     @FXML
     private TextArea instructionsTextFolder;
     @FXML
-    private TextField videoLink;
+    private TextField URLField;
     @FXML
     private Button selectFileButton;
     @FXML
@@ -221,8 +221,8 @@ public class YouBotController {
     @FXML
     protected void onRunButtonClick() {
 
-        // Sets the URL to videoLink content.
-        setURL(videoLink.getCharacters().toString());
+        // Sets the URL to URLField content.
+        setURL(URLField.getCharacters().toString());
 
         /*
         * Checks if the file is not imported;
@@ -241,7 +241,7 @@ public class YouBotController {
             new Alert(Alert.AlertType.ERROR, "Folder path is null. Please select the folder before attempting to run" +
                     ".").show();
         } else if (getURL() == null || getURL().isEmpty()) {
-            new Alert(Alert.AlertType.ERROR, "Video URL is null. Please insert the video URL before attempting to run.")
+            new Alert(Alert.AlertType.ERROR, "URL is null. Please insert the URL before attempting to run.")
             .show();
         } else {
             new Alert(Alert.AlertType.CONFIRMATION, "Remember to click the Stop button before making " +
@@ -321,7 +321,7 @@ public class YouBotController {
      */
     private void setupBeforeRun() {
 
-        System.setProperty("webdriver.gecko.driver", "src/main/resources/com/github/gigazin/youbot/geckodriver-v0.33.0-win64/geckodriver.exe");
+        System.setProperty("webdriver.gecko.driver", "src/main/resources/com/github/gigazin/torwithselenium/geckodriver-v0.33.0-win64/geckodriver.exe");
         FirefoxOptions options = new FirefoxOptions();
         options.setBinary(getTorPath());
         options.setProfile(getProfile());

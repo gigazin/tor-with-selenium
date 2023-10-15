@@ -6,10 +6,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="600.0" stylesheets="@youbot.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.gigazin.youbot.application.YouBotController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="420.0" prefWidth="600.0" stylesheets="@youbot.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.gigazin.torwithselenium.application.YouBotController">
    <children>
       <Button fx:id="runButton" layoutX="215.0" layoutY="345.0" mnemonicParsing="false" onAction="#onRunButtonClick" prefHeight="25.0" prefWidth="73.0" text="Run" textAlignment="CENTER" />
-      <TextField fx:id="videoLink" layoutX="181.0" layoutY="302.0" prefHeight="25.0" prefWidth="238.0" promptText="Insert video URL here..." />
+      <TextField fx:id="URLField" layoutX="181.0" layoutY="302.0" prefHeight="25.0" prefWidth="238.0" promptText="Insert URL here..." />
       <Button fx:id="stopButton" layoutX="319.0" layoutY="345.0" mnemonicParsing="false" onAction="#onStopButtonClick" prefHeight="25.0" prefWidth="73.0" text="Stop" textAlignment="CENTER" />
       <Label fx:id="pathInjectedFile" alignment="CENTER" layoutX="42.0" layoutY="140.0" prefHeight="19.0" prefWidth="517.0" text="Waiting for file..." textAlignment="CENTER" />
       <TextArea fx:id="instructionsTextFile" editable="false" layoutX="128.0" layoutY="46.0" prefHeight="39.0" prefWidth="345.0" text="Click the button below, search for your *\Tor Browser\Browser directory and select firefox.exe" wrapText="true" />

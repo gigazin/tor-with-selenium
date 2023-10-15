@@ -8,6 +8,6 @@ module com.github.gigazin.youbot {
     requires com.google.common;
     requires dev.failsafe.core;
 
-    exports com.github.gigazin.youbot.application;
-    opens com.github.gigazin.youbot.application to javafx.fxml;
+    exports com.github.gigazin.torwithselenium.application;
+    opens com.github.gigazin.torwithselenium.application to javafx.fxml;
 }

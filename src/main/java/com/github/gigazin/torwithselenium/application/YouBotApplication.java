@@ -1,4 +1,4 @@
-package com.github.gigazin.youbot.application;
+package com.github.gigazin.torwithselenium.application;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
