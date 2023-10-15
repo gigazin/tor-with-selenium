@@ -14,7 +14,7 @@ import java.io.IOException;
  * @version 1.0.0-bt1
  * @since 10/15/2023
  */
-public class YouBotApplication extends Application {
+public class AutomaTorApplication extends Application {
 
     /**
      * Creates and launches the application main stage.
@@ -26,9 +26,9 @@ public class YouBotApplication extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(YouBotApplication.class.getResource("youbot-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(AutomaTorApplication.class.getResource("youbot-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 420);
-        stage.setTitle("YouBot Application");
+        stage.setTitle("AutomaTor Application");
         stage.setScene(scene);
         stage.show();
     }

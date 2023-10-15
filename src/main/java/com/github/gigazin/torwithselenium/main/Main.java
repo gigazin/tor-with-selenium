@@ -1,6 +1,6 @@
 package com.github.gigazin.torwithselenium.main;
 
-import com.github.gigazin.torwithselenium.application.YouBotApplication;
+import com.github.gigazin.torwithselenium.application.AutomaTorApplication;
 
 /**
  * This class and method are used to launch the application outside IDE.
@@ -12,7 +12,7 @@ import com.github.gigazin.torwithselenium.application.YouBotApplication;
 public class Main {
 
     public static void main(String[] args) {
-        YouBotApplication.main(args);
+        AutomaTorApplication.main(args);
     }
 
 }

@@ -19,7 +19,7 @@ import java.io.File;
  * @version 1.0.0-bt1
  * @since 10/15/2023
  */
-public class YouBotController {
+public class AutomaTorController {
 
     @FXML
     private TextArea instructionsTextFile;
