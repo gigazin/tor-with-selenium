@@ -16,8 +16,8 @@ import java.io.File;
  * Functions and methods here are used to control the interface and automate Tor with Selenium.
  *
  * @author gigazin
- * @version 1.0.0-bt1
- * @since 10/15/2023
+ * @version 1.0.0-bt2
+ * @since 1.0.0-bt1
  */
 public class AutomaTorController {
 
@@ -52,7 +52,7 @@ public class AutomaTorController {
      * File selection is required to run the marionette.
      *
      * @author gigazin
-     * @since 10/15/2023
+     * @since 1.0.0-bt1
      */
     @FXML
     protected void onSelectFileButtonClick() {
@@ -136,7 +136,7 @@ public class AutomaTorController {
      * Folder selection is required to run the marionette.
      *
      * @author gigazin
-     * @since 15/10/2023
+     * @since 1.0.0-bt1
      */
     @FXML
     protected void onSelectFolderButtonClick() {
@@ -216,7 +216,7 @@ public class AutomaTorController {
      * Shows a confirmation dialog when all the requirements are satisfied and runs the marionette.
      *
      * @author gigazin
-     * @since 10/15/2023
+     * @since 1.0.0-bt1
      */
     @FXML
     protected void onRunButtonClick() {
@@ -230,7 +230,7 @@ public class AutomaTorController {
         * Checks if the URL is empty;
         * Shows an error accordingly and don't allow the marionette to run.
         *
-        * If every requirement is satisfied, shows a confirmation dialog
+        * If all requirements are satisfied, shows a confirmation dialog
         * with instructions, sets action to true (allow run loop)
         * and runs the marionette.
         */
@@ -254,12 +254,10 @@ public class AutomaTorController {
     }
 
     /**
-     <p>Controls the "stop" button to set action to false and stop marionette looping run.<br>
-     This button may not be working as intended (version 1.0.0-bt1): crash caused by run() doesn't allow the button
-     to be clicked.</p>
+     <p>Controls the "stop" button to set action to false and stop marionette looping run.</p>
      *
      * @author gigazin
-     * @since 10/15/2023
+     * @since 1.0.0-bt1
      */
     @FXML
     protected void onStopButtonClick() {
@@ -308,7 +306,7 @@ public class AutomaTorController {
 
     /**
      <p>
-     If you found this repository by searching "Tor with Selenium", here's what you came here for. This method is
+     If you found this repository by searching "Tor with Selenium", here's what you came here for. This function is
      creating and setting up the driver in order for the marionette to be able to run.<br>
      <br>
      Variable "driver" is declared as attribute at the very beginning of the class in case you're lost trying to find
@@ -317,7 +315,7 @@ public class AutomaTorController {
      Check all getters and setters as well as onSelectFileButtonClick() and onSelectFolderButtonClick() if you're in doubt on how Tor path and Profile are set.</p>
      *
      * @author gigazin
-     * @since 10/15/2023
+     * @since 1.0.0-bt1
      */
     private void setupBeforeRun() {
 
@@ -331,28 +329,31 @@ public class AutomaTorController {
 
     /**
      <p>
-     Infinitely loops the marionette until user clicks the Stop button.<br>
-     This method is working but not as intended (version 1.0.0-bt1): loop is running as intended but application
-     interface stops responding.</p>
+     Infinitely loops the marionette until user clicks the Stop button.</p>
      *
      * @author gigazin
-     * @since 10/15/2023
+     * @since 1.0.0-bt1
      */
     private void run() {
 
-        while (getActionStatus()) {
-            try {
-                setupBeforeRun();
-                driver.get("about:blank");
-                Thread.sleep(3000);
-                driver.get(getURL());
-                Thread.sleep(20000);
-                driver.quit();
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                new Alert(Alert.AlertType.ERROR, "Error while running WebDriver: " + e.getMessage()).showAndWait();
+        Thread exec = new Thread(() -> {
+            while (getActionStatus()) {
+                try {
+                    System.out.println("Running thread.");
+                    setupBeforeRun();
+                    driver.get("about:blank");
+                    Thread.sleep(3000);
+                    driver.get(getURL());
+                    Thread.sleep(15000);
+                    driver.quit();
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    new Alert(Alert.AlertType.ERROR, "Error while running WebDriver: " + e.getMessage()).showAndWait();
+                }
             }
-        }
+        });
+
+        exec.start();
 
     }
 

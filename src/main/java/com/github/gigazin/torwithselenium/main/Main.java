@@ -6,8 +6,8 @@ import com.github.gigazin.torwithselenium.application.AutomaTorApplication;
  * This class and method are used to launch the application outside IDE.
  *
  * @author gigazin
- * @version 1.0.0-bt1
- * @since 10/15/2023
+ * @version 1.0.0-bt2
+ * @since 1.0.0-bt1
  */
 public class Main {
 

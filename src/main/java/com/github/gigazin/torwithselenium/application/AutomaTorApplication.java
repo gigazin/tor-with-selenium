@@ -11,8 +11,8 @@ import java.io.IOException;
  * The application "main" class where the stage is created and launched.
  *
  * @author gigazin
- * @version 1.0.0-bt1
- * @since 10/15/2023
+ * @version 1.0.0-bt2
+ * @since 1.0.0-bt1
  */
 public class AutomaTorApplication extends Application {
 
@@ -20,7 +20,7 @@ public class AutomaTorApplication extends Application {
      * Creates and launches the application main stage.
      *
      * @author gigazin
-     * @since 10/15/2023
+     * @since 1.0.0-bt1
      * @param stage The stage of the application.
      * @throws IOException Thrown if the application fails to create the stage.
      */
