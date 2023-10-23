@@ -1,23 +1,37 @@
 .root {
-    -fx-background-color: #003954;
+    -fx-background-color: linear-gradient(to bottom, #552a80, #3d3375);
     -fx-text-alignment: center;
+    -fx-background-radius: 25px;
 }
 
-.text-area .content {
-    -fx-background-color: #003954;
-    -fx-background-radius: 0px;
-    -fx-text-box-border: transparent;
-    -fx-cursor: pointer;
+#leftPane {
+    -fx-background-color: #1f1231;
+    -fx-background-radius: 25px 0px 0px 25px;
 }
 
-.text-area, .text-field, .label {
+#automatorText {
+    -fx-font-weight: 800;
+    -fx-font-size: 30px;
+    -fx-font-style: normal;
+}
+
+#gigaLogo {
+    -fx-opacity: 50%;
+}
+
+#gigaLogo:hover {
+    -fx-opacity: 75%;
+}
+
+.text-field, .label {
     -fx-text-fill: #FFFFFF;
     -fx-text-box-border: transparent;
     -fx-font-family: Arial, sans-serif;
 }
 
 .text-field {
-    -fx-background-color: #1d73a1;
+    -fx-prompt-text-fill: white;
+    -fx-background-color: linear-gradient(to right bottom, darkmagenta, darkorange);
     -fx-background-radius: 20px;
 }
 
@@ -26,17 +40,41 @@
     -fx-font-style: italic;
 }
 
+#instructionsTextFile, #instructionsTextFolder, #instructionsTextDriver {
+    -fx-font-style: normal;
+    -fx-font-weight: 700;
+}
+
+#automatorBuildText {
+    -fx-font-style: normal;
+}
+
+#closeButton {
+    -fx-background-color: red;
+    -fx-border-radius: 50px;
+    -fx-background-radius: 50px;
+}
+
+#minimizeButton {
+    -fx-background-color: orange;
+    -fx-border-radius: 50px;
+    -fx-background-radius: 50px;
+}
+
+
 .button {
     -fx-cursor: hand;
-    -fx-background-color: #0074ad;
+    -fx-background-color: linear-gradient(to right bottom, magenta, orange);
     -fx-background-radius: 20px;
     -fx-text-fill: #FFFFFF;
+    -fx-font-weight: 700;
 }
 
 .button:hover {
-    -fx-background-color: #42b5f1;
+    -fx-background-color: linear-gradient(to right bottom, #ff68ff, #ffc560);
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 204, 74, 0.81), 10, 0, 0, 0);
 }
 
 .button:hover:pressed {
-    -fx-background-color: #103549;
+    -fx-background-color: linear-gradient(to right bottom, darkmagenta, darkorange);
 }

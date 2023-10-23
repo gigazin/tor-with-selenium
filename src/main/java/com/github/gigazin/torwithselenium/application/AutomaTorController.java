@@ -1,7 +1,11 @@
 package com.github.gigazin.torwithselenium.application;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -10,18 +14,27 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.io.File;
-import java.net.URISyntaxException;
 
 /**
  * The main stage controller class.
  * Functions and methods here are used to control the interface and automate Tor with Selenium.
  *
  * @author gigazin
- * @version 1.0.0-bt3
+ * @version 1.0.0
  * @since 1.0.0-bt1
  */
 public class AutomaTorController {
 
+    @FXML
+    private ImageView gigaLogo;
+    @FXML
+    private Label automatorText;
+    @FXML
+    private Label automatorDescriptionText;
+    @FXML
+    private Label gigaCopyrightText;
+    @FXML
+    private Pane leftPane;
     @FXML
     private Label instructionsTextFile;
     @FXML
@@ -30,6 +43,10 @@ public class AutomaTorController {
     private Label instructionsTextDriver;
     @FXML
     private TextField URLField;
+    @FXML
+    private Button closeButton;
+    @FXML
+    private Button minimizeButton;
     @FXML
     private Button selectFileButton;
     @FXML
@@ -46,6 +63,8 @@ public class AutomaTorController {
     private Label pathInjectedFolder;
     @FXML
     private Label pathInjectedDriver;
+    @FXML
+    private Label automatorBuildText;
 
     private boolean action;
     private String torPath;
@@ -54,6 +73,38 @@ public class AutomaTorController {
     private String URL;
     private FirefoxProfile profile;
     private WebDriver driver;
+
+    /**
+     * Controls the "Close" button to close the application.
+     *
+     * @author gigazin
+     * @since 1.0.0
+     * @param e The event of the button click.
+     */
+    @FXML
+    protected void onCloseButtonClick(ActionEvent e) {
+        Stage stage;
+        stage = (Stage)((Button)e.getSource()).getScene().getWindow();
+        if (getActionStatus()) {
+            driver.quit();
+            setAction(false);
+        }
+        stage.close();
+    }
+
+    /**
+     * Controls the "Minimize" button to minimize the application.
+     *
+     * @author gigazin
+     * @since 1.0.0
+     * @param e The event of the button click.
+     */
+    @FXML
+    protected void onMinimizeButtonClick(ActionEvent e) {
+        Stage stage;
+        stage = (Stage)((Button)e.getSource()).getScene().getWindow();
+        stage.setIconified(true);
+    }
 
     /**
      * Controls the "Select File" button to open a file chooser dialog and save the selected file path.
@@ -307,12 +358,12 @@ public class AutomaTorController {
         } else if (getProfilePath() == null || pathInjectedFolder.getText().equalsIgnoreCase("Folder not imported!")) {
             new Alert(Alert.AlertType.ERROR, "Folder path is null. Please select the folder before attempting to run" +
                     ".").show();
-        } else if (getURL() == null || getURL().isEmpty()) {
-            new Alert(Alert.AlertType.ERROR, "URL is null. Please insert the URL before attempting to run.")
-            .show();
         } else if (getDriverPath() == null || pathInjectedDriver.getText().equalsIgnoreCase("Driver not imported!")) {
             new Alert(Alert.AlertType.ERROR, "Driver path is null. Please select the driver before attempting to run" +
                     ".").show();
+        } else if (getURL() == null || getURL().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "URL is null. Please insert the URL before attempting to run.")
+            .show();
         } else {
             new Alert(Alert.AlertType.CONFIRMATION, "Remember to click the Stop button before making " +
                     "any changes and attempting to run again.", ButtonType.OK)
