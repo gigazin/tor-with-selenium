@@ -26,8 +26,8 @@ public class AutomaTorApplication extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(AutomaTorApplication.class.getResource("youbot-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 420);
+        FXMLLoader fxmlLoader = new FXMLLoader(AutomaTorApplication.class.getResource("automator-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 900, 600);
         stage.setTitle("AutomaTor Application");
         stage.setScene(scene);
         stage.show();

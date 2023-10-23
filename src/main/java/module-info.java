@@ -1,4 +1,4 @@
-module com.github.gigazin.youbot {
+module com.github.gigazin.torwithselenium {
     requires javafx.controls;
     requires javafx.fxml;
     requires org.seleniumhq.selenium.java;

@@ -10,27 +10,32 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.io.File;
+import java.net.URISyntaxException;
 
 /**
  * The main stage controller class.
  * Functions and methods here are used to control the interface and automate Tor with Selenium.
  *
  * @author gigazin
- * @version 1.0.0-bt2
+ * @version 1.0.0-bt3
  * @since 1.0.0-bt1
  */
 public class AutomaTorController {
 
     @FXML
-    private TextArea instructionsTextFile;
+    private Label instructionsTextFile;
     @FXML
-    private TextArea instructionsTextFolder;
+    private Label instructionsTextFolder;
+    @FXML
+    private Label instructionsTextDriver;
     @FXML
     private TextField URLField;
     @FXML
     private Button selectFileButton;
     @FXML
     private Button selectFolderButton;
+    @FXML
+    private Button selectDriverButton;
     @FXML
     private Button runButton;
     @FXML
@@ -39,10 +44,13 @@ public class AutomaTorController {
     private Label pathInjectedFile;
     @FXML
     private Label pathInjectedFolder;
+    @FXML
+    private Label pathInjectedDriver;
 
     private boolean action;
     private String torPath;
     private String profilePath;
+    private String driverPath;
     private String URL;
     private FirefoxProfile profile;
     private WebDriver driver;
@@ -212,6 +220,65 @@ public class AutomaTorController {
     }
 
     /**
+     * Controls the "Select Driver" button to open a file chooser dialog and save the selected file path.
+     *
+     * @author gigazin
+     * @since 1.0.0-bt3
+     */
+    @FXML
+    protected void onSelectDriverButtonClick() {
+
+        /*
+         * Setting Look & Feel of the file search window to match the
+         * current system being used instead of standard Java L&F.
+         */
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException |
+                 IllegalAccessException e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to set JFileChooser look and feel: " + e.getMessage()).show();
+        }
+
+        // Creating a fileChooser with drag & drop enabled and All Files filter disabled.
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setDragEnabled(true);
+
+        // Setting the file chooser filter to allow only .exe files selection.
+        fileChooser.setFileFilter(new FileFilter() {
+
+            @Override
+            public boolean accept(File f) {
+                if (f.isDirectory()) return true;
+                else return f.getName().toLowerCase().endsWith(".exe");
+            }
+
+            @Override
+            public String getDescription() {
+                return "Executable Files (*.exe)";
+            }
+        });
+
+        // Open the file dialog and save the response.
+        int fileOpenResponse = fileChooser.showOpenDialog(null);
+
+        /*
+        * Checks if the return of showOpenDialog was 0 (APPROVE_OPTION), saves the
+        * file path and sets the pathInjectedDriver text to show the driver path.
+        *
+        * If the return was not APPROVE_OPTION, sets the pathInjectedDriver text to
+        * "Driver not imported!".
+        */
+        if (fileOpenResponse == JFileChooser.APPROVE_OPTION) {
+            setDriverPath(fileChooser.getSelectedFile().getAbsolutePath()); // The requested path to driver.
+            pathInjectedDriver.setText("Driver path: " + getDriverPath());
+        } else {
+            pathInjectedDriver.setText("Driver not imported!");
+        }
+
+    }
+
+    /**
      * Controls the "run" button to show errors regarding the requirements to run the marionette.
      * Shows a confirmation dialog when all the requirements are satisfied and runs the marionette.
      *
@@ -243,6 +310,9 @@ public class AutomaTorController {
         } else if (getURL() == null || getURL().isEmpty()) {
             new Alert(Alert.AlertType.ERROR, "URL is null. Please insert the URL before attempting to run.")
             .show();
+        } else if (getDriverPath() == null || pathInjectedDriver.getText().equalsIgnoreCase("Driver not imported!")) {
+            new Alert(Alert.AlertType.ERROR, "Driver path is null. Please select the driver before attempting to run" +
+                    ".").show();
         } else {
             new Alert(Alert.AlertType.CONFIRMATION, "Remember to click the Stop button before making " +
                     "any changes and attempting to run again.", ButtonType.OK)
@@ -261,6 +331,7 @@ public class AutomaTorController {
      */
     @FXML
     protected void onStopButtonClick() {
+        if (getActionStatus()) driver.quit();
         setAction(false);
     }
 
@@ -292,6 +363,14 @@ public class AutomaTorController {
         this.profile = new FirefoxProfile(path);
     }
 
+    private void setDriverPath(String newDriverPath) {
+        this.driverPath = newDriverPath;
+    }
+
+    private String getDriverPath() {
+        return this.driverPath;
+    }
+
     private FirefoxProfile getProfile() {
         return this.profile;
     }
@@ -313,13 +392,18 @@ public class AutomaTorController {
      its declaration.<br>
      <br>
      Check all getters and setters as well as onSelectFileButtonClick() and onSelectFolderButtonClick() if you're in doubt on how Tor path and Profile are set.</p>
-     *
+     * @see #onSelectFileButtonClick()
+     * @see #onSelectFolderButtonClick()
      * @author gigazin
      * @since 1.0.0-bt1
      */
     private void setupBeforeRun() {
 
-        System.setProperty("webdriver.gecko.driver", "src/main/resources/com/github/gigazin/torwithselenium/geckodriver-v0.33.0-win64/geckodriver.exe");
+        // Run in IDE
+//            System.setProperty("webdriver.gecko.driver",
+//            "src/main/resources/com/github/gigazin/torwithselenium/driver/geckodriver.exe");
+
+        System.setProperty("webdriver.gecko.driver", getDriverPath());
         FirefoxOptions options = new FirefoxOptions();
         options.setBinary(getTorPath());
         options.setProfile(getProfile());
@@ -337,9 +421,10 @@ public class AutomaTorController {
     private void run() {
 
         Thread exec = new Thread(() -> {
+            System.out.println("Thread is running...");
             while (getActionStatus()) {
                 try {
-                    System.out.println("Running thread.");
+                    System.out.println("Thread loop is running...");
                     setupBeforeRun();
                     driver.get("about:blank");
                     Thread.sleep(3000);
@@ -353,6 +438,7 @@ public class AutomaTorController {
             }
         });
 
+        exec.setName("Marionette Loop");
         exec.start();
 
     }

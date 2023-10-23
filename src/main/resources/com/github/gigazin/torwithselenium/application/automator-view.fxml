@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@automator.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.gigazin.torwithselenium.application.AutomaTorController">
+   <children>
+      <Label fx:id="instructionsTextFile" layoutX="316.0" layoutY="47.0" text="Search for your Tor Browser and select firefox.exe" textAlignment="CENTER" />
+      <Button fx:id="selectFileButton" layoutX="408.0" layoutY="76.0" mnemonicParsing="false" onAction="#onSelectFileButtonClick" prefHeight="25.0" prefWidth="84.0" text="Select File" />
+      <Label fx:id="pathInjectedFile" alignment="CENTER" layoutX="325.0" layoutY="115.0" prefHeight="19.0" prefWidth="250.0" text="Waiting for file..." textAlignment="CENTER" />
+      <Label fx:id="instructionsTextFolder" layoutX="300.0" layoutY="170.0" text="Search and select your Tor Browser profile.default folder" textAlignment="CENTER" />
+      <Button fx:id="selectFolderButton" layoutX="404.0" layoutY="199.0" mnemonicParsing="false" onAction="#onSelectFolderButtonClick" prefHeight="25.0" prefWidth="92.0" text="Select Folder" />
+      <Label fx:id="pathInjectedFolder" alignment="CENTER" layoutX="325.0" layoutY="238.0" prefHeight="19.0" prefWidth="250.0" text="Waiting for folder..." textAlignment="CENTER" />
+      <Label fx:id="instructionsTextDriver" layoutX="300.0" layoutY="285.0" text="Search and select your Tor Browser profile.default folder" textAlignment="CENTER" />
+      <Button fx:id="selectDriverButton" layoutX="404.0" layoutY="315.0" mnemonicParsing="false" onAction="#onSelectDriverButtonClick" prefHeight="25.0" prefWidth="92.0" text="Select Driver" />
+      <Label fx:id="pathInjectedDriver" alignment="CENTER" layoutX="325.0" layoutY="354.0" prefHeight="19.0" prefWidth="250.0" text="Waiting for driver..." textAlignment="CENTER" />
+      <TextField fx:id="URLField" layoutX="331.0" layoutY="484.0" prefHeight="25.0" prefWidth="238.0" promptText="Insert URL here..." />
+      <Button fx:id="runButton" layoutX="365.0" layoutY="527.0" mnemonicParsing="false" onAction="#onRunButtonClick" prefHeight="25.0" prefWidth="73.0" text="Run" textAlignment="CENTER" />
+      <Button fx:id="stopButton" layoutX="469.0" layoutY="527.0" mnemonicParsing="false" onAction="#onStopButtonClick" prefHeight="25.0" prefWidth="73.0" text="Stop" textAlignment="CENTER" />
+   </children>
+</AnchorPane>
