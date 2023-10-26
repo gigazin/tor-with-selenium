@@ -1,11 +1,18 @@
 package com.github.gigazin.torwithselenium.application;
 
+import java.security.SecureRandom;
+
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -20,7 +27,7 @@ import java.io.File;
  * Functions and methods here are used to control the interface and automate Tor with Selenium.
  *
  * @author gigazin
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0-bt1
  */
 public class AutomaTorController {
@@ -64,6 +71,10 @@ public class AutomaTorController {
     @FXML
     private Label pathInjectedDriver;
     @FXML
+    private Label statusText;
+    @FXML
+    private Circle statusCircle;
+    @FXML
     private Label automatorBuildText;
 
     private boolean action;
@@ -73,6 +84,7 @@ public class AutomaTorController {
     private String URL;
     private FirefoxProfile profile;
     private WebDriver driver;
+    private int timer;
 
     /**
      * Controls the "Close" button to close the application.
@@ -384,6 +396,8 @@ public class AutomaTorController {
     protected void onStopButtonClick() {
         if (getActionStatus()) driver.quit();
         setAction(false);
+        this.statusText.setText("AutomaTor Offline");
+        this.statusCircle.setFill(javafx.scene.paint.Color.RED);
     }
 
     private void setAction(boolean newAction) {
@@ -434,6 +448,14 @@ public class AutomaTorController {
         return this.URL;
     }
 
+    private void setTimer(int newTimer) {
+        this.timer = newTimer;
+    }
+
+    private int getTimer() {
+        return this.timer;
+    }
+
     /**
      <p>
      If you found this repository by searching "Tor with Selenium", here's what you came here for. This function is
@@ -454,11 +476,24 @@ public class AutomaTorController {
 //            System.setProperty("webdriver.gecko.driver",
 //            "src/main/resources/com/github/gigazin/torwithselenium/driver/geckodriver.exe");
 
+        SecureRandom r = new SecureRandom();
+        int min = 90000;
+        int max = 300000;
+        setTimer(r.nextInt((max + 1 - min) + min));
+
         System.setProperty("webdriver.gecko.driver", getDriverPath());
         FirefoxOptions options = new FirefoxOptions();
         options.setBinary(getTorPath());
         options.setProfile(getProfile());
         this.driver = new FirefoxDriver(options);
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                statusText.setText("AutomaTor Online");
+                statusCircle.setFill(javafx.scene.paint.Color.GREEN);
+            }
+        });
 
     }
 
@@ -477,14 +512,50 @@ public class AutomaTorController {
                 try {
                     System.out.println("Thread loop is running...");
                     setupBeforeRun();
-                    driver.get("about:blank");
-                    Thread.sleep(3000);
+                    Thread.sleep(5000); // Waiting for Tor to connect to the network.
                     driver.get(getURL());
-                    Thread.sleep(15000);
-                    driver.quit();
+                    Thread.sleep(10000); // Waiting for page to load.
+                    try {
+                        // Checking if YouTube cookie consent dialog is present and clicking on "Accept all" button.
+                        if (!driver.findElements(By.xpath("//*[@id=\"dialog\"]")).isEmpty()) {
+                            driver.findElement(By.xpath("/html/body/ytd-app/ytd-consent-bump-v2-lightbox/tp-yt-paper" +
+                                    "-dialog/div[4]/div[2]/div[6]/div[1]/ytd-button-renderer[2]/yt-button-shape" +
+                                    "/button")).click();
+                            Thread.sleep(10000); // Waiting for a possible page reload.
+                        }
+
+                        // Clicking on the video play button.
+                        driver.findElement(By.xpath("/html/body/ytd-app/div[1]/ytd-page-manager/ytd-watch-flexy/div[5" +
+                                "]/div[1]/div/div[1]/div[2]/div/div/ytd-player/div/div/div[30]/div[2]/div[1]/button")).click();
+
+                        Thread.sleep(getTimer()); // Waiting for a random generated time before closing the driver.
+                        driver.quit();
+                    } catch (NoSuchElementException e) {
+                        System.out.println("Error while trying to find element: " + e.getMessage());
+                        System.out.println("This may be due to the page not loading in time for the element to be found.");
+                        System.out.println("Trying again in 10 seconds...");
+
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                statusText.setText("AutomaTor Offline");
+                                statusCircle.setFill(javafx.scene.paint.Color.RED);
+                            }
+                        });
+
+                        driver.quit();
+                    }
+                    // Giving a 2 seconds gap between each loop to avoid Tor trying to run 2 instances at the same time.
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
-                    new Alert(Alert.AlertType.ERROR, "Error while running WebDriver: " + e.getMessage()).showAndWait();
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            statusText.setText("AutomaTor Offline");
+                            statusCircle.setFill(javafx.scene.paint.Color.RED);
+                            new Alert(Alert.AlertType.ERROR, "Error while running WebDriver: " + e.getMessage()).showAndWait();
+                        }
+                    });
                 }
             }
         });

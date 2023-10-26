@@ -45,20 +45,29 @@
     -fx-font-weight: 700;
 }
 
+#statusText {
+    -fx-font-size: 10px;
+}
+
 #automatorBuildText {
     -fx-font-style: normal;
 }
 
-#closeButton {
-    -fx-background-color: red;
+#closeButton, #minimizeButton {
     -fx-border-radius: 50px;
     -fx-background-radius: 50px;
+    -fx-min-height: 15px;
+    -fx-min-width: 15px;
+    -fx-max-height: 15px;
+    -fx-max-width: 15px;
+}
+
+#closeButton {
+    -fx-background-color: red;
 }
 
 #minimizeButton {
     -fx-background-color: orange;
-    -fx-border-radius: 50px;
-    -fx-background-radius: 50px;
 }
 
 

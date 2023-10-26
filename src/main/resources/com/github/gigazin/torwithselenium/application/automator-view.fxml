@@ -7,11 +7,12 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@automator.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.gigazin.torwithselenium.application.AutomaTorController">
    <children>
-      <Button fx:id="minimizeButton" layoutX="824.0" layoutY="15.0" mnemonicParsing="false" onAction="#onMinimizeButtonClick" prefHeight="0.0" prefWidth="25.0" textAlignment="CENTER" />
-      <Button fx:id="closeButton" layoutX="855.0" layoutY="15.0" mnemonicParsing="false" onAction="#onCloseButtonClick" prefHeight="0.0" prefWidth="25.0" textAlignment="CENTER" />
+      <Button fx:id="minimizeButton" layoutX="842.0" layoutY="17.0" mnemonicParsing="false" onAction="#onMinimizeButtonClick" prefHeight="0.0" prefWidth="25.0" textAlignment="CENTER" />
+      <Button fx:id="closeButton" layoutX="867.0" layoutY="17.0" mnemonicParsing="false" onAction="#onCloseButtonClick" prefHeight="0.0" prefWidth="25.0" textAlignment="CENTER" />
       <Label fx:id="instructionsTextFile" layoutX="560.0" layoutY="88.0" text="Search for your Tor Browser and select firefox.exe" textAlignment="CENTER" />
       <Button fx:id="selectFileButton" layoutX="662.0" layoutY="117.0" mnemonicParsing="false" onAction="#onSelectFileButtonClick" prefHeight="25.0" prefWidth="84.0" text="Select File" />
       <Label fx:id="pathInjectedFile" alignment="CENTER" layoutX="579.0" layoutY="156.0" prefHeight="19.0" prefWidth="250.0" text="Waiting for file..." textAlignment="CENTER" />
@@ -24,7 +25,9 @@
       <TextField fx:id="URLField" layoutX="585.0" layoutY="445.0" prefHeight="25.0" prefWidth="238.0" promptText="Insert URL here..." />
       <Button fx:id="runButton" layoutX="619.0" layoutY="488.0" mnemonicParsing="false" onAction="#onRunButtonClick" prefHeight="25.0" prefWidth="73.0" text="Run" textAlignment="CENTER" />
       <Button fx:id="stopButton" layoutX="723.0" layoutY="488.0" mnemonicParsing="false" onAction="#onStopButtonClick" prefHeight="25.0" prefWidth="73.0" text="Stop" textAlignment="CENTER" />
-      <Label fx:id="automatorBuildText" alignment="CENTER" layoutX="677.0" layoutY="571.0" text="Automator v1.0.0" textAlignment="CENTER" wrapText="true" />
+      <Label fx:id="automatorBuildText" alignment="CENTER" layoutX="659.0" layoutY="571.0" text="AutomaTor v1.0.1" textAlignment="CENTER" wrapText="true" />
+      <Label fx:id="statusText" layoutX="660.0" layoutY="536.0" text="AutomaTor Offline" />
+      <Circle fx:id="statusCircle" fill="#ff1f1f" layoutX="750.0" layoutY="542.0" radius="4.0" stroke="TRANSPARENT" strokeType="INSIDE" />
       <Pane fx:id="leftPane" prefHeight="600.0" prefWidth="515.0">
          <children>
             <ImageView fx:id="gigaLogo" fitHeight="240.0" fitWidth="325.0" layoutX="95.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true" smooth="false">
